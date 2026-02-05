@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor Pokémon.ᐟ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+     <link rel="shortcut icon" href="Imagenes/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide-react@latest/dist/lucide-react.js"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <header> 
+        <nav class="container mx-auto px-6 py-4 flex flex-col items-center space-y-4">
+            <div class="text-center">
+                <p class="header-title">Gestor de Encuentros Pokémon</p> 
+                <img class="header-image" src="Imagenes/pokeball.gif" alt="Pokemon GIF">
+            </div>
+            
+            <!-- Bloque de Botones -->
+            <div class="flex flex-wrap justify-center gap-2">
+                <button onclick="showSection('entrenadores')" class="px-4 py-2 rounded text-white bg-red-700 hover:bg-red-800 transition">Entrenadores</button>
+                <button onclick="showSection('equipos')" class="px-4 py-2 rounded text-white bg-red-700 hover:bg-red-800 transition">Equipos</button>
+                <button onclick="showSection('capturar')" class="px-4 py-2 rounded text-white bg-red-700 hover:bg-red-800 transition">Capturar</button>
+                <button onclick="showSection('encuentros')" class="px-4 py-2 rounded text-white bg-red-700 hover:bg-red-800 transition">Encuentros</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="container mx-auto px-6 py-8 flex-grow">
+        
+        <!-- Sección 1: Gestión de Entrenadores (Entidad 1) -->
+        <section id="entrenadores" class="app-section space-y-6">
+            <h2 class="text-3xl font-bold text-gray-800 ">Gestión de Entrenadores</h2>
+            <!-- Formulario de Alta/Modificación -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold mb-4" id="form-entrenador-title">Nuevo Entrenador</h3>
+                <form id="form-entrenador" class="space-y-4">
+                    <input type="hidden" id="entrenador-id">
+                    <div>
+                        <label for="entrenador-nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
+                        <input type="text" id="entrenador-nombre" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500" required>
+                    </div>
+                    <div>
+                        <label for="entrenador-ciudad" class="block text-sm font-medium text-gray-700">Ciudad Origen</label>
+                        <input type="text" id="entrenador-ciudad" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
+                    </div>
+                    <div class="flex gap-4">
+                        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition">Guardar Entrenador</button>
+                        <button type="button" onclick="resetFormEntrenador()" class="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500 transition">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Listado -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold mb-4">Entrenadores Registrados</h3>
+                <div id="lista-entrenadores" class="space-y-3">
+                    <!-- Los entrenadores se cargarán aquí -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 2: Gestión de Equipos (Entidad 2) -->
+        <section id="equipos" class="app-section space-y-6 hidden">
+            <h2 class="text-3xl font-bold text-gray-800">Gestión de Equipos</h2>
+            <!-- Formulario de Alta/Modificación -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold mb-4" id="form-equipo-title">Nuevo Equipo</h3>
+                <form id="form-equipo" class="space-y-4">
+                    <input type="hidden" id="equipo-id">
+                    <div>
+                        <label for="equipo-nombre" class="block text-sm font-medium text-gray-700">Nombre del Equipo</label>
+                        <input type="text" id="equipo-nombre" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500" required placeholder="Ej: Equipo Fuego, Equipo de Ash">
+                    </div>
+                    <div>
+                        <label for="equipo-entrenador-id" class="block text-sm font-medium text-gray-700">Entrenador</label>
+                        <select id="equipo-entrenador-id" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500" required>
+                            <!-- Opciones de entrenador se cargarán aquí -->
+                        </select>
+                    </div>
+                    <div class="flex gap-4">
+                        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition">Guardar Equipo</button>
+                        <button type="button" onclick="resetFormEquipo()" class="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500 transition">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Listado -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold mb-4">Equipos Creados</h3>
+                <div id="lista-equipos" class="space-y-3">
+                    <!-- Los equipos se cargarán aquí -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 3: Capturar Pokémon (Entidad 3: PokemonCapturado) -->
+        <section id="capturar" class="app-section space-y-6 hidden">
+            <h2 class="text-3xl font-bold text-gray-800">Capturar Pokémon</h2>
+            <!-- Buscador (Consumo de PokeAPI) -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold mb-4">Buscar en la Pokédex</h3>
+                <div class="flex gap-4">
+                    <input type="text" id="pokemon-search" placeholder="Buscar por nombre o ID" class="flex-grow px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
+                    <button onclick="buscarPokemon()" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">Buscar</button>
+                </div>
+                <div id="search-result" class="mt-6">
+                    <!-- El resultado de la búsqueda de PokeAPI se mostrará aquí -->
+                </div>
+            </div>
+            
+            <!-- Listado de Pokémon Capturados (CRUD de tu API) -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold mb-4">Mis Pokémon Capturados</h3>
+                <div id="lista-pokemon-capturados" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Los Pokémon capturados se cargarán aquí -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 4: Encuentros (Entidad 4) -->
+        <section id="encuentros" class="app-section space-y-6 hidden">
+            <h2 class="text-3xl font-bold text-gray-800">Encuentros Pokémon</h2>
+            <!-- Formulario de Encuentro ( PK1 vs PK2) -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold mb-4">Registrar Encuentro</h3>
+                <div class="flex justify-around items-center space-x-4">
+                    <!-- Pokémon 1 -->
+                    <div class="flex-1 text-center" id="pk1-selection">
+                        <div class="bg-gray-200 h-48 w-full rounded-lg flex items-center justify-center mb-2">
+                            <span class="text-gray-500">PK1</span>
+                        </div>
+                        <button onclick="abrirModalSeleccion('pk1')" class="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition w-full">Elegir Pokémon 1</button>
+                    </div>
+                    
+                    <span class="text-5xl font-bold text-gray-700">VS</span>
+                    
+                    <!-- Pokémon 2 -->
+                    <div class="flex-1 text-center" id="pk2-selection">
+                        <div class="bg-gray-200 h-48 w-full rounded-lg flex items-center justify-center mb-2">
+                            <span class="text-gray-500">PK2</span>
+                        </div>
+                        <button class="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition w-full">Elegir Pokémon 2</button>
+                   </div>
+                </div>
+                
+                <div class="mt-6 text-center">
+                  
+                   <button class="mt-4 bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-700 transition text-lg font-semibold">¡Simular Encuentro!</button>
+                </div>
+            </div>
+
+            <!-- Listado de Encuentros, vs -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold mb-4">Historial de Encuentros</h3>
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="border p-2 text-left">Encuentro (PK1 vs PK2)</th>
+                            <th class="border p-2 text-left">Ganador</th>
+                            <th class="border p-2 text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-encuentros">
+                        <!-- El historial se cargará aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer  -->
+    <footer class="mt-12 py-6">
+        <div class="container mx-auto px-6 text-center">
+            <p> 2025 - Desarrollado por: Melani Lechman</p>
+            <p>Proyecto Coloquio - Consumo de API REST con Spring Boot</p>
+        </div>
+    </footer>
+
+    <!-- Modal para Errores -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="text-xl font-bold text-red-600">Error</h2>
+            </div>
+            <div class="modal-body">
+                <p id="errorModalMessage">Ocurrió un error.</p>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeErrorModal()" class="bg-red-600 text-white px-4 py-2 rounded-md">Cerrar</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal para Confirmación de Borrado -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="text-xl font-bold">Confirmar Eliminación</h2>
+            </div>
+            <div class="modal-body">
+                <p id="deleteModalMessage">¿Estás seguro de que deseas eliminar este elemento?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="deleteModalCancel" class="bg-gray-400 text-white px-4 py-2 rounded-md">Cancelar</button>
+                <button id="deleteModalConfirm" class="bg-red-600 text-white px-4 py-2 rounded-md">Eliminar</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal para Selección de Pokémon (Encuentros) -->
+    <div id="pokemonSelectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="text-xl font-bold">Selecciona un Pokémon Capturado</h2>
+            </div>
+            <div class="modal-body">
+                <div id="pokemonSelectModalList" class="grid grid-cols-2 md:grid-cols-3 gap-4 max-h-60 overflow-y-auto">
+                    <!-- Lista de Pokémon para seleccionar -->
+                </div>
+            </div>
+            <div class="modal-footer">
+             <button class="bg-gray-400 text-white px-4 py-2 rounded-md">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+ <script src="script.js" defer></script>
+</body>
+</html>

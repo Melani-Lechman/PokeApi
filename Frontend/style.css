@@ -1,0 +1,108 @@
+/* --- Fuentes  --- */
+@font-face {
+    font-family: 'pokemon-titulo';
+    src: url(Fuentes/Pokemon\ Solid.ttf);
+}
+
+@font-face {
+    font-family: 'pokemon';
+    src: url(Fuentes/Pokemon\ Classic.ttf);
+}
+
+/* --- Estilos Generales --- */
+body {
+   
+    font-family: 'pokemon', 'Inter', sans-serif;
+    background-color: #f0fdf4; 
+    background-image: url('Imagenes/fondo.png'); 
+}
+
+/* --- Header --- */
+header {
+    background-color: #f11b22e3;
+    color: white; 
+    padding-bottom: 1rem;
+}
+
+.header-title {
+   font-family: 'pokemon-titulo', sans-serif; 
+   font-size: 2.9rem; 
+   color: white;
+}
+
+.header-image {
+   width: 150px;
+   height: auto;
+   margin: 0 auto;
+   opacity: 0.70;
+}
+
+h2{
+    background-color: #ffffff84;
+    width: fit-content;
+    padding: 0 10px;
+    border-radius: 8px;
+}
+/* --- Footer --- */
+footer {
+    background-color: #439447be;
+    color: white;
+}
+
+/* --- Colores de tipos de Pokémon --- */
+.type-normal { background-color: #A8A878; color: black;}
+.type-fire { background-color: #F08030; color: black; }
+.type-water { background-color: #6890F0; color: black; }
+.type-electric { background-color: #F8D030; color: black; }
+.type-grass { background-color: #78C850; color: black;}
+.type-ice { background-color: #98D8D8; color: black; }
+.type-fighting { background-color: #C03028; color: black;}
+.type-poison { background-color: #A040A0; color: black; }
+.type-ground { background-color: #E0C068; color: black; }
+.type-flying { background-color: #A890F0; color: black; }
+.type-psychic { background-color: #F85888; color:black; }
+.type-bug { background-color: #A8B820; color: black; }
+.type-rock { background-color: #B8A038; color: black; }
+.type-ghost { background-color: #705898; color: black;}
+.type-dragon { background-color: #7038F8; color: black }
+.type-dark { background-color: #705848; color: black}
+.type-steel { background-color: #B8B8D0; color: black; }
+.type-fairy { background-color: #EE99AC; color: black; }
+
+/* --- Estilos para el modal --- */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 50;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+.modal-body {
+    padding-top: 10px;
+}
+.modal-footer {
+    padding-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
